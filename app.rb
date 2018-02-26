@@ -59,6 +59,11 @@ get('/employees') do
   erb(:employees)
 end
 
+get('/employees/:id') do
+  @employee = Employee.find(params.fetch("id").to_i())
+  erb(:employee_edit)
+end
+
 get('/employees/:id/edit') do
   @employee = Employee.find(params.fetch("id").to_i())
   erb(:employee_edit)
