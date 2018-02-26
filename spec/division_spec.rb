@@ -7,9 +7,9 @@ describe(Division) do
   end
 
   it("has many employees") do
-   division = Division.create({:title => "HR", :division_id => nil})
-   employee1 = Employee.create({:name => "Mike", :employee_id => employee.id})
-   employee2 = Employee.create({:name => "Dawn", :employee_id => employee.id})
+   division = Division.create({:title => "HR"})
+   employee1 = Employee.create({:name => "Mike", :division_id => division.id})
+   employee2 = Employee.create({:name => "Dawn", :division_id => division.id})
    expect(division.employees()).to(eq([employee1, employee2]))
  end
 end
