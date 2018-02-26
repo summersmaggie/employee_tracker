@@ -1,14 +1,23 @@
 <h1>Welcome to the Employee Tracker App</h1>
 
-<h2>Add a division to our database:</h2>
-
-<form action="/divisions" method="post">
-  <div class="form-group">
-    <label class="form-label" for='title'>Division Title:</label>
-    <input class="form-control" id='title' name='title' type='text'>
-    </br>
-    <button type="submit" class="button btn-success">Create Division!</button>
-  </div>
-</form>
+<div class="container">
+  <a href="/divisions">Add New Division</a>
+  <br>
+  <a href="/employees">Add New Employee</a>
+</div>
 
 <p>Here are all your divisions:</p>
+
+<ul>
+  <% @divisions.each do |division| %>
+    <li><%= division.title %></li>
+  <% end %>
+</ul>
+
+<p>Here are all your employees:</p>
+
+<ul>
+  <% @employees.each do |employee| %>
+    <li><%= employee.name %></li>
+  <% end %>
+</ul>

@@ -1,0 +1,26 @@
+<h2>Add an employee to our database:</h2>
+
+<form action="/employees" method="post">
+  <div class="form-group">
+    <label class="form-label" for='name'>Employee Title:</label>
+    <input class="form-control" id='name' name='name' type='text'>
+    </br>
+    <button type="submit" class="button btn-success">Create Employee!</button>
+  </div>
+</form>
+
+<% if @employees.any?() %>
+  <p>Click on a employee to see information about it and add divisions to it:</p>
+
+  <ul>
+    <% @employees.each do |employee| %>
+    <li><a href="/employee/<%= employee.id() %>"><%= employee.name() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no employees added yet!</p>
+<% end %>
+
+<p><a href="/divisions">See all divisions</a></p>
+<br>
+<p><a href="/">Return to Home Page</a></p>
