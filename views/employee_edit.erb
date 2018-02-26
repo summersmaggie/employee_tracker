@@ -7,3 +7,9 @@
 
   <button type="submit">Update</button>
 </form>
+
+<form action="/employees/<%= @employee.id()%>" method="post">
+  <input name="_method" type="hidden" value="delete">
+
+  <button type="submit" class="btn btn-danger">Delete Employees</button>
+</form>
