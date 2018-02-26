@@ -11,19 +11,6 @@ get('/') do
   erb(:index)
 end
 
-post('/divisions') do
-  title = params.fetch('title')
-  division = Division.new({:title => title, :id => nil})
-  division.save()
-  erb(:division_success)
-end
-
-post('/employees') do
-  name = params.fetch('name')
-  employee = Employee.new({:name => name, :id => nil})
-  erb(:employee_success)
-end
-
 get('/divisions') do
   @divisions = Division.all()
   erb(:divisions)
@@ -32,4 +19,36 @@ end
 get('/employees') do
   @employees = Employee.all()
   erb(:employees)
+end
+
+post('/divisions') do
+  title = params.fetch('title')
+  division = Division.new({:title => title, :division_id => nil})
+  division.save()
+  @divisions = Division.all()
+  erb(:divisions)
+end
+
+post('/employees') do
+  name = params.fetch('name')
+  employee = Employee.new({:name => name, :employee_id => nil})
+  employee.save()
+  @employees = Employee.all()
+  erb(:employees)
+end
+
+get("/division/:id") do
+  @division = Division.find(params.fetch("id").to_i())
+  @employees = Employee.all()
+  erb(:division_info)
+end
+
+get("/employees/:id") do
+  @employee = Employee.find(params.fetch("id").to_i())
+  @divisions = Division.all()
+  erb(:employee_info)
+end
+
+patch("/division/:id") do
+  division_id = params.fetch("id").to
 end
