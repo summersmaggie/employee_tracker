@@ -6,9 +6,21 @@ require("./lib/division")
 require("./lib/employee")
 
 get('/') do
-  @divisions = Division.all()
   @employees = Employee.all()
+  @divisions = Division.all()
   erb(:index)
+end
+
+get('/division/new') do
+  erb(:division_form)
+end
+
+post('/divisions') do
+  title = params.fetch('title')
+  division = Division.new({:title => title, :id => nil})
+  division.save()
+  @divisions = Division.all()
+  erb(:divisions)
 end
 
 get('/divisions') do
@@ -16,39 +28,46 @@ get('/divisions') do
   erb(:divisions)
 end
 
+get("/divisions/:id") do
+  @division = Division.find(params.fetch("id").to_i())
+  erb(:division)
+end
+
+post('/employees') do
+  name = params.fetch('name')
+  division_id = params.fetch("division_id").to_i()
+  @division = Division.find(division_id)
+  @employee = Employee.new({:name => name, :division_id => division_id})
+  @employee.save()
+  erb(:division)
+end
+
+get("/divisions/:id/edit") do
+  @division = Division.find(params.fetch("id").to_i())
+  erb(:division_edit)
+end
+
+patch("/divisions/:id") do
+  title = params.fetch("title")
+  @division = Division.find(params.fetch("id").to_i())
+  @division.update({:title => title})
+  erb(:division)
+end
+
 get('/employees') do
   @employees = Employee.all()
   erb(:employees)
 end
 
-post('/divisions') do
-  title = params.fetch('title')
-  division = Division.new({:title => title, :division_id => nil})
-  division.save()
-  @divisions = Division.all()
-  erb(:divisions)
+get('/employees/:id/edit') do
+  @employee = Employee.find(params.fetch("id").to_i())
+  erb(:employee_edit)
 end
 
-post('/employees') do
-  name = params.fetch('name')
-  employee = Employee.new({:name => name, :employee_id => nil})
-  employee.save()
+patch("/employees/:id") do
+  name = params.fetch("name")
+  @employee = Employee.find(params.fetch("id").to_i())
+  @employee.update({:name => name})
   @employees = Employee.all()
   erb(:employees)
-end
-
-get("/division/:id") do
-  @division = Division.find(params.fetch("id").to_i())
-  @employees = Employee.all()
-  erb(:division_info)
-end
-
-get("/employees/:id") do
-  @employee = Employee.find(params.fetch("id").to_i())
-  @divisions = Division.all()
-  erb(:employee_info)
-end
-
-patch("/division/:id") do
-  division_id = params.fetch("id").to
 end
